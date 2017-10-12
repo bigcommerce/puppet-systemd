@@ -11,12 +11,13 @@ class systemd (
 
   exec {
     'systemctl-daemon-reload':
-      command => 'systemctl daemon-reload',
+      command => '/bin/systemctl daemon-reload',
+      onlyif  => '/usr/bin/test -x /bin/systemctl',
   }
 
   exec {
     'systemd-tmpfiles-create':
-      command => 'systemd-tmpfiles --create',
+      command => '/bin/systemd-tmpfiles --create',
   }
 
   create_resources('systemd::service_limits', $service_limits, {})
